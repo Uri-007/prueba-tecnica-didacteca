@@ -1,9 +1,9 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface IBook extends Document {
   title: string;
   author: string;
-  user: string;
+  user: Types.ObjectId;
 }
 
 const BookSchema = new Schema<IBook>({

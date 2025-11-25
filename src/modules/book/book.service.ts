@@ -12,7 +12,7 @@ export class BookService {
 
     const user = await User.findById(data.userId);
     if (!user) {
-      throw new AppError("BOOK_NOT_FOUND");
+      throw new AppError("USER_NOT_FOUND");
     }
 
     const exists = await Book.findOne({
@@ -23,13 +23,15 @@ export class BookService {
 
     if (exists) throw new AppError("BOOK_ALREADY_EXISTS");
 
-    const book = await Book.create({
+    let book = await Book.create({
       user: data.userId,
       title: data.title,
       author: data.author,
     });
 
     await User.findByIdAndUpdate(data.userId, { $push: { books: book._id } });
+
+    book = await book.populate("user");
 
     return book;
   }
