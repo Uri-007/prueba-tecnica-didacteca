@@ -28,6 +28,10 @@ export const ERROR_CODES = {
     message: "Ocurrió un error interno",
     status: 500,
   },
+  EMAIL_ALREADY_EXISTS: {
+    message: "No se pudo completar la operación",
+    statusCode: 409,
+  },
 } as const;
 
 export type ErrorCode = keyof typeof ERROR_CODES;

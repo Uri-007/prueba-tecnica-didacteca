@@ -6,6 +6,12 @@ import { AppError } from "../../common/exceptions/AppError";
 
 export class UserService {
   async create(data: CreateUserInput) {
+    const exists = await User.findOne({ email: data.email });
+
+    if (exists) {
+      throw new AppError("EMAIL_ALREADY_EXISTS");
+    }
+
     return await User.create(data);
   }
 
