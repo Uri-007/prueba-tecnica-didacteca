@@ -1,0 +1,52 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  books: [Book!]
+}
+
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  user: User!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}
+
+input UpdateUserInput {
+  id: ID!
+  name: String
+  email: String
+}
+
+input CreateBookInput {
+  userId: ID!
+  title: String!
+  author: String!
+}
+
+input UpdateBookInput {
+  id: ID!
+  title: String
+  author: String
+}
+
+type Query {
+  users: [User!]!
+  user(id: ID!): User
+  booksByUser(userId: ID!): [Book!]!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(input: UpdateUserInput!): User!
+  deleteUser(id: ID!): String
+
+  createBook(input: CreateBookInput!): Book!
+  updateBook(input: UpdateBookInput!): Book!
+  deleteBook(id: ID!): String
+}
