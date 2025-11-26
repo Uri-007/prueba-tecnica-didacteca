@@ -1,46 +1,81 @@
+"""
+Representa a un usuario dentro del sistema.
+Cada usuario puede tener múltiples libros relacionados.
+"""
 type User {
   id: ID!
   name: String!
   email: String!
+  """
+  Lista de libros asociados a este usuario.
+  Puede ser vacía si el usuario no tiene libros registrados.
+  """
   books: [Book!]
 }
 
+"""
+Representa un libro registrado por un usuario.
+Cada libro pertenece a un único usuario.
+"""
 type Book {
   id: ID!
   title: String!
   author: String!
+  """
+  Usuario propietario de este libro.
+  """
   user: User!
 }
 
+"""
+Datos requeridos para crear un nuevo usuario.
+"""
 input CreateUserInput {
   name: String!
   email: String!
 }
 
+"""
+Datos opcionales para actualizar un usuario existente.
+El campo `id` es obligatorio.
+"""
 input UpdateUserInput {
   id: ID!
   name: String
   email: String
 }
 
+"""
+Parámetros necesarios para crear un libro.
+"""
 input CreateBookInput {
   userId: ID!
   title: String!
   author: String!
 }
 
+"""
+Parámetros para actualizar un libro existente.
+El campo `id` es obligatorio.
+"""
 input UpdateBookInput {
   id: ID!
   title: String
   author: String
 }
 
+"""
+Consultas disponibles en la API.
+"""
 type Query {
   users: [User!]!
   user(id: ID!): User
   booksByUser(userId: ID!): [Book!]!
 }
 
+"""
+Mutaciones disponibles para manipular usuarios y libros.
+"""
 type Mutation {
   createUser(input: CreateUserInput!): User!
   updateUser(input: UpdateUserInput!): User!
